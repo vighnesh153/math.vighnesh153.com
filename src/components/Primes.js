@@ -12,7 +12,8 @@ import {
   isPrime,
   primeFactors,
   findPreviousPrime,
-  findNextPrimeNumber
+  findNextPrimeNumber,
+  findPrimeNumbersInRange,
 } from "../utils/primes";
 
 function Primes() {
@@ -23,6 +24,7 @@ function Primes() {
     primeFactors: '',
   });
   const [prevAndNextPrime, setPrevAndNextPrime] = useState('');
+  const [primesInRange, setPrimesInRange] = useState(null);
 
   const checkIsPrime = () => {
     const value = document.getElementById('is-prime').valueAsNumber;
@@ -43,6 +45,12 @@ function Primes() {
     const value = document.getElementById('prev-next-prime').valueAsNumber;
     const nextPrime = findNextPrimeNumber(value);
     setPrevAndNextPrime(`Next prime number is ${nextPrime}`);
+  };
+
+  const findPrimesInRange = () => {
+    const start = document.getElementById('prime-number-range-start').valueAsNumber;
+    const end = document.getElementById('prime-number-range-end').valueAsNumber;
+    setPrimesInRange(findPrimeNumbersInRange(Math.min(start, end), Math.max(start, end)));
   };
 
   return (
@@ -131,6 +139,51 @@ function Primes() {
         >
           {prevAndNextPrime}
         </Typography>
+      </Box>
+      <Divider />
+      {/* Primes in Range */}
+      <Box m={2}>
+        <Typography style={{marginBottom: theme.spacing(1)}}>
+          Find primes in between a range
+        </Typography>
+        <Box display={'flex'} alignItems={'center'}>
+          <TextField
+            id='prime-number-range-start'
+            variant={"outlined"}
+            type={'number'}
+            style={{width: 300, marginRight: theme.spacing(1)}}
+          />
+          <TextField
+            id='prime-number-range-end'
+            variant={"outlined"}
+            type={'number'}
+            style={{width: 300, marginRight: theme.spacing(1)}}
+          />
+          <Button
+            variant={"contained"}
+            color={"secondary"}
+            onClick={findPrimesInRange}
+            style={{fontWeight: 'bold', marginRight: theme.spacing(1)}}
+          >
+            Find
+          </Button>
+        </Box>
+        {primesInRange && (
+          <Typography
+            color={primesInRange.length ? "primary" : 'secondary'}
+            style={{fontWeight: 'bold', marginTop: theme.spacing(1)}}
+          >
+            Count: {primesInRange.length}
+          </Typography>
+        )}
+        {primesInRange && primesInRange.length > 0 && (
+          <Typography
+            color={"primary"}
+            style={{fontWeight: 'bold', marginTop: theme.spacing(1)}}
+          >
+            Values: {primesInRange.join(', ')}
+          </Typography>
+        )}
       </Box>
     </Box>
   );

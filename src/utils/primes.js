@@ -71,3 +71,13 @@ export function findNextPrimeNumber(n) {
     n += 1
   }
 }
+
+export function findPrimeNumbersInRange(start, end) {
+  const primes = [];
+  for (let i = start; i <= end; i++) {
+    if (isPrime(i)) {
+      primes.push(i);
+    }
+  }
+  return primes;
+}
