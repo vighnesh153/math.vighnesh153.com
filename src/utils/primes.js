@@ -42,3 +42,32 @@ export function primeFactors(n) {
 
   return factors;
 }
+
+export function findPreviousPrime(n) {
+  const originalN = n;
+  n = Math.floor(n);
+
+  if (n === originalN) {
+    n -= 1;
+  }
+
+  while (n > 1) {
+    if (isPrime(n)) {
+      return n;
+    }
+    n -= 1;
+  }
+
+  return 'NULL';
+}
+
+export function findNextPrimeNumber(n) {
+  n = Math.floor(n + 1)
+
+  while (true) {
+    if (isPrime(n)) {
+      return n;
+    }
+    n += 1
+  }
+}

@@ -8,7 +8,12 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 
-import { isPrime, primeFactors } from "../utils/primes";
+import {
+  isPrime,
+  primeFactors,
+  findPreviousPrime,
+  findNextPrimeNumber
+} from "../utils/primes";
 
 function Primes() {
   const theme = useTheme();
@@ -17,6 +22,7 @@ function Primes() {
     string: '',
     primeFactors: '',
   });
+  const [prevAndNextPrime, setPrevAndNextPrime] = useState('');
 
   const checkIsPrime = () => {
     const value = document.getElementById('is-prime').valueAsNumber;
@@ -27,8 +33,21 @@ function Primes() {
     });
   };
 
+  const findPrevPrime = () => {
+    const value = document.getElementById('prev-next-prime').valueAsNumber;
+    const prevPrime = findPreviousPrime(value);
+    setPrevAndNextPrime(`Previous prime number is ${prevPrime}`);
+  };
+
+  const findNextPrime = () => {
+    const value = document.getElementById('prev-next-prime').valueAsNumber;
+    const nextPrime = findNextPrimeNumber(value);
+    setPrevAndNextPrime(`Next prime number is ${nextPrime}`);
+  };
+
   return (
-    <Box>
+    <Box pb={2}>
+      {/* Primality Check */}
       <Box m={2}>
         <Typography style={{marginBottom: theme.spacing(1)}}>
           Check if a number is a prime number (max 16 digit numbers)
@@ -77,9 +96,40 @@ function Primes() {
         )}
       </Box>
       <Divider />
+      {/* Previous and Next Prime */}
       <Box m={2}>
-        <Typography>
-          Is Prime?
+        <Typography style={{marginBottom: theme.spacing(1)}}>
+          Find the Previous or Next Prime
+        </Typography>
+        <Box display={'flex'} alignItems={'center'}>
+          <TextField
+            id='prev-next-prime'
+            variant={"outlined"}
+            type={'number'}
+            style={{width: 300, marginRight: theme.spacing(1)}}
+          />
+          <Button
+            variant={"contained"}
+            color={"secondary"}
+            onClick={findPrevPrime}
+            style={{fontWeight: 'bold', marginRight: theme.spacing(1)}}
+          >
+            Find Previous
+          </Button>
+          <Button
+            variant={"contained"}
+            color={"secondary"}
+            onClick={findNextPrime}
+            style={{fontWeight: 'bold'}}
+          >
+            Find Next
+          </Button>
+        </Box>
+        <Typography
+          color="primary"
+          style={{fontWeight: 'bold', marginTop: theme.spacing(1)}}
+        >
+          {prevAndNextPrime}
         </Typography>
       </Box>
     </Box>
